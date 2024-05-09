@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  web:
+    image: odoo:17.0
+    depends_on:
+      - pgsql
+    ports:
+      - "8069:8069"
+    volumes:
+      - ./docker-data/odoo:/var/lib/odoo
+      - ./config:/etc/odoo
+      - ./addons:/mnt/extra-addons
+    environment:
+    - HOST=pgsql
+    - USER=odoo
+    - PASSWORD=k9de-a3za-mgk2
+  pgsql:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=k9de-a3za-mgk2
+      - POSTGRES_USER=odoo
+    volumes:
+      - ./docker-data/postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: always
+
+# 64t4-7acs-dvcm
